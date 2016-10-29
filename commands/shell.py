@@ -68,11 +68,11 @@ notes:
       playbooks will follow the trend of using M(command) unless M(shell) is
       explicitly required. When running ad-hoc commands, use your best
       judgement.
-   -  To sanitize any variables passed to the shell module, you should use 
+   -  To sanitize any variables passed to the shell module, you should use
       "{{ var | quote }}" instead of just "{{ var }}" to make sure they don't include evil things like semicolons.
 
 requirements: [ ]
-author: 
+author:
     - Ansible Core Team
     - Michael DeHaan
 '''

@@ -49,9 +49,16 @@ author: "Derek Carter (@goozbach) <goozbach@friocorte.com>"
 '''
 
 EXAMPLES = '''
-- selinux: policy=targeted state=enforcing
-- selinux: policy=targeted state=permissive
-- selinux: state=disabled
+- selinux:
+    policy: targeted
+    state:enforcing
+
+- selinux:
+    policy: targeted
+    state: permissive
+
+- selinux:
+    state: disabled
 '''
 
 import os
@@ -209,4 +216,3 @@ from ansible.module_utils.basic import *
 
 if __name__ == '__main__':
     main()
-

@@ -72,13 +72,26 @@ requirements:
 
 EXAMPLES = '''
 # Example action to start service httpd, if not running
-- systemd: state=started name=httpd
+- systemd:
+    state: started
+    name: httpd
+
 # Example action to stop service cron on debian, if running
-- systemd: name=cron state=stopped
+- systemd:
+    name: cron
+    state: stopped
+
 # Example action to restart service cron on centos, in all cases, also issue daemon-reload to pick up config changes
-- systemd: state=restarted daemon_reload=yes name=crond
+- systemd:
+    state: restarted
+    daemon_reload: yes
+    name: crond
+
 # Example action to reload service httpd, in all cases
-- systemd: name=httpd state=reloaded
+- systemd:
+    name: httpd
+    state: reloaded
+    
 # Example action to enable service httpd and ensure it is not masked
 - systemd:
     name: httpd

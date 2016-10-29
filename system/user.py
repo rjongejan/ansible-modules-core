@@ -159,7 +159,7 @@ options:
         default: rsa
         version_added: "0.9"
         description:
-            - Optionally specify the type of SSH key to generate. 
+            - Optionally specify the type of SSH key to generate.
               Available SSH key types will depend on implementation
               present on target host.
     ssh_key_file:
@@ -200,19 +200,38 @@ options:
 
 EXAMPLES = '''
 # Add the user 'johnd' with a specific uid and a primary group of 'admin'
-- user: name=johnd comment="John Doe" uid=1040 group=admin
+- user:
+    name: johnd
+    comment: "John Doe"
+    uid: 1040
+    group: admin
 
 # Add the user 'james' with a bash shell, appending the group 'admins' and 'developers' to the user's groups
-- user: name=james shell=/bin/bash groups=admins,developers append=yes
+- user:
+    name: james
+    shell: /bin/bash
+    groups: admins,developers
+    append: yes
 
 # Remove the user 'johnd'
-- user: name=johnd state=absent remove=yes
+- user:
+    name: johnd
+    state: absent
+    remove: yes
 
 # Create a 2048-bit SSH key for user jsmith in ~jsmith/.ssh/id_rsa
-- user: name=jsmith generate_ssh_key=yes ssh_key_bits=2048 ssh_key_file=.ssh/id_rsa
+- user:
+    name: jsmith
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
 
 # added a consultant whose account you want to expire
-- user: name=james18 shell=/bin/zsh groups=developers expires=1422403387
+- user:
+    name: james18
+    shell: /bin/zsh
+    groups: developers
+    expires: 1422403387
 '''
 
 import os
@@ -335,8 +354,8 @@ class User(object):
             cmd.append(self.group)
         elif self.group_exists(self.name):
             # use the -N option (no user group) if a group already
-            # exists with the same name as the user to prevent 
-            # errors from useradd trying to create a group when 
+            # exists with the same name as the user to prevent
+            # errors from useradd trying to create a group when
             # USERGROUPS_ENAB is set in /etc/login.defs.
             if os.path.exists('/etc/redhat-release'):
                 dist = platform.dist()
@@ -889,7 +908,7 @@ class FreeBsdUser(User):
                 self.module.get_bin_path('chpass', True),
                 '-p',
                 self.password,
-                self.name 
+                self.name
             ]
             return self.execute_command(cmd)
 
@@ -1225,7 +1244,7 @@ class SunOS(User):
     """
     This is a SunOS User manipulation class - The main difference between
     this class and the generic user class is that Solaris-type distros
-    don't support the concept of a "system" account and we need to 
+    don't support the concept of a "system" account and we need to
     edit the /etc/shadow file manually to set a password. (Ugh)
 
     This overrides the following methods from the generic class:-
